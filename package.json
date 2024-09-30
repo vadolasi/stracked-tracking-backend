@@ -1,0 +1,30 @@
+{
+  "name": "stracked",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "dev:worker": "nodemon src/worker.ts",
+    "build": "sucrase src -d dist --transforms typescript,imports",
+    "start": "pm2 start dist/index.js -i max"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.35.0",
+    "dotenv": "^16.4.5",
+    "fast-jwt": "^4.0.5",
+    "node-cron": "^3.0.3",
+    "pm2": "^5.4.2",
+    "puppeteer": "^23.4.1",
+    "puppeteer-cluster": "^0.24.0",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.48.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "nodemon": "^3.1.7",
+    "sucrase": "^3.35.0"
+  }
+}
