@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./heatmap.min.js"></script>
+</head>
+<body>
+        <div id="heatmapContainer">
+            <image src="http://localhost:5000/image/af9050e2-df49-41de-94a7-457c84a314c9" />
+        </div>
+  <script>
+    ;(async () => {
+      const res = await fetch("/data");
+      const data = JSON.parse(await res.json()).points.map((point) => ({
+        x: Math.round(point.x),
+        y: Math.round(point.y),
+        value: point.value,
+      }));
+
+      console.log(data);
+
+      const heatmap = h337.create({
+        container: document.getElementById("heatmapContainer"),
+      });
+
+      heatmap.setData({ max: 3, data });
+    })();
+  </script>
+</body>
+</html>
