@@ -11,7 +11,7 @@ dotenv.config()
 
 const verifyToken = createVerifier({ key: process.env.JWT_SECRET })
 
-const influx = new InfluxDB({ url: "http://localhost:8086", token: process.env.INFLUXDB_ADMIN_TOKEN })
+const influx = new InfluxDB({ url: process.env.INFLUX_URL!, token: process.env.INFLUXDB_ADMIN_TOKEN })
 
 const writeApi = influx.getWriteApi("stracked", "stracked", "ms")
 
