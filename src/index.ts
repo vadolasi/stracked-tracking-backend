@@ -66,8 +66,7 @@ async function main() {
         return
       }
 
-      const { getResult } = new UAParser(req.getHeader("user-agent"))
-      const result = getResult()
+      const result = new UAParser(req.getHeader("user-agent")).getResult()
 
       const cookies = parse(req.getHeader("cookie")!)
 
