@@ -11,6 +11,9 @@ importers:
       '@influxdata/influxdb-client':
         specifier: ^1.35.0
         version: 1.35.0
+      cookie:
+        specifier: ^0.6.0
+        version: 0.6.0
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -20,6 +23,9 @@ importers:
       fast-jwt:
         specifier: ^4.0.5
         version: 4.0.5
+      maxmind:
+        specifier: ^4.3.22
+        version: 4.3.22
       mongoose:
         specifier: ^8.7.0
         version: 8.7.0(socks@2.8.3)
@@ -38,13 +44,22 @@ importers:
       uWebSockets.js:
         specifier: github:uNetworking/uWebSockets.js#v20.48.0
         version: https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/51ae1d1fd92dff77cbbdc7c431021f85578da1a6
+      ua-parser-js:
+        specifier: ^1.0.39
+        version: 1.0.39
     devDependencies:
+      '@types/cookie':
+        specifier: ^0.6.0
+        version: 0.6.0
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
       '@types/node':
         specifier: ^22.7.4
         version: 22.7.4
+      '@types/ua-parser-js':
+        specifier: ^0.7.39
+        version: 0.7.39
       nodemon:
         specifier: ^3.1.7
         version: 3.1.7
@@ -130,6 +145,9 @@ packages:
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
+  '@types/cookie@0.6.0':
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+
   '@types/express-serve-static-core@5.0.0':
     resolution: {integrity: sha512-AbXMTZGt40T+KON9/Fdxx0B2WK5hsgxcfXJLr5bFpZ7b4JCex2WyQPTEKdXqfHiY5nKKBScZ7yCoO6Pvgxfvnw==}
 
@@ -156,6 +174,9 @@ packages:
 
   '@types/serve-static@1.15.7':
     resolution: {integrity: sha512-W8Ym+h8nhuRwaKPaDw34QUkwsGi6Rc4yYqvKFo5rm2FUEhCFbzVWrxXUxuKK8TASjWsysJY0nsmNCGhCOIsrOw==}
+
+  '@types/ua-parser-js@0.7.39':
+    resolution: {integrity: sha512-P/oDfpofrdtF5xw433SPALpdSchtJmY7nsJItf8h3KXqOslkbySh8zq4dSWXH2oTjRvJ5PczVEoCZPow6GicLg==}
 
   '@types/webidl-conversions@7.0.3':
     resolution: {integrity: sha512-CiJJvcRtIgzadHCYXw7dqEnMNRjhGZlYK05Mj9OyktqV8uVT8fD2BFOB7S1uwBE3Kj2Z+4UyPmFw/Ixgw/LAlA==}
@@ -799,6 +820,10 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
+  maxmind@4.3.22:
+    resolution: {integrity: sha512-dfLO11mE77ELTEIXNezfW0eslodsFLsZ1lQkLauP+5Zsg1m7kCGtljqRyVOd9E5Ne2RJgvY6UU09qvnVocOZvA==}
+    engines: {node: '>=12', npm: '>=6'}
+
   media-typer@0.3.0:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
@@ -847,6 +872,10 @@ packages:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
     hasBin: true
+
+  mmdb-lib@2.1.1:
+    resolution: {integrity: sha512-yx8H/1H5AfnufiLnzzPqPf4yr/dKU9IFT1rPVwSkrKWHsQEeVVd6+X+L0nUbXhlEFTu3y/7hu38CFmEVgzvyeg==}
+    engines: {node: '>=10', npm: '>=6'}
 
   mnemonist@0.39.8:
     resolution: {integrity: sha512-vyWo2K3fjrUw8YeeZ1zF0fy6Mu59RHokURlld8ymdUPjMlD9EC9ov1/YPqTgqRvUN9nTr3Gqfz29LYAmu0PHPQ==}
@@ -1285,6 +1314,10 @@ packages:
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
 
+  tiny-lru@11.2.11:
+    resolution: {integrity: sha512-27BIW0dIWTYYoWNnqSmoNMKe5WIbkXsc0xaCQHd3/3xT2XMuMJrzHdrO9QBFR14emBz1Bu0dOAs2sCBBrvgPQA==}
+    engines: {node: '>=12'}
+
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
@@ -1327,6 +1360,10 @@ packages:
   uWebSockets.js@https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/51ae1d1fd92dff77cbbdc7c431021f85578da1a6:
     resolution: {tarball: https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/51ae1d1fd92dff77cbbdc7c431021f85578da1a6}
     version: 20.48.0
+
+  ua-parser-js@1.0.39:
+    resolution: {integrity: sha512-k24RCVWlEcjkdOxYmVJgeD/0a1TiSpqLg+ZalVGV9lsnr4yqu0w7tX/x2xX6G4zpkgQnRf89lxuZ1wsbjXM8lw==}
+    hasBin: true
 
   unbzip2-stream@1.4.3:
     resolution: {integrity: sha512-mlExGW4w71ebDJviH16lQLtZS32VKqsSfk80GCfUlwT/4/hNRFsoscrF/c++9xinkMzECL1uL9DDwXqFWkruPg==}
@@ -1561,6 +1598,8 @@ snapshots:
     dependencies:
       '@types/node': 22.7.4
 
+  '@types/cookie@0.6.0': {}
+
   '@types/express-serve-static-core@5.0.0':
     dependencies:
       '@types/node': 22.7.4
@@ -1597,6 +1636,8 @@ snapshots:
       '@types/http-errors': 2.0.4
       '@types/node': 22.7.4
       '@types/send': 0.17.4
+
+  '@types/ua-parser-js@0.7.39': {}
 
   '@types/webidl-conversions@7.0.3': {}
 
@@ -2245,6 +2286,11 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
+  maxmind@4.3.22:
+    dependencies:
+      mmdb-lib: 2.1.1
+      tiny-lru: 11.2.11
+
   media-typer@0.3.0: {}
 
   memory-pager@1.5.0: {}
@@ -2276,6 +2322,8 @@ snapshots:
   mitt@3.0.1: {}
 
   mkdirp@1.0.4: {}
+
+  mmdb-lib@2.1.1: {}
 
   mnemonist@0.39.8:
     dependencies:
@@ -2832,6 +2880,8 @@ snapshots:
 
   through@2.3.8: {}
 
+  tiny-lru@11.2.11: {}
+
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
@@ -2865,6 +2915,8 @@ snapshots:
   typed-query-selector@2.12.0: {}
 
   uWebSockets.js@https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/51ae1d1fd92dff77cbbdc7c431021f85578da1a6: {}
+
+  ua-parser-js@1.0.39: {}
 
   unbzip2-stream@1.4.3:
     dependencies:
