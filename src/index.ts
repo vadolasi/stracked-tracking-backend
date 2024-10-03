@@ -30,7 +30,7 @@ type UserData = Payload & {
   user_id: string
   country?: string
   region?: string
-  referrer: string
+  referrer?: string
   utm_source?: string
   utm_medium?: string
   utm_campaign?: string
@@ -106,7 +106,6 @@ async function main() {
         .tag("visitorUuid", userData.visitorUuid)
         .tag("userUuid", userData.user_id)
         .tag("path", userData.path)
-        .tag("referrer", userData.referrer)
         .tag("type", "open")
 
       if (userData.browser) point = point.tag("browser", userData.browser)
@@ -121,6 +120,7 @@ async function main() {
       if (userData.utm_content) point = point.tag("utm_content", userData.utm_content)
       if (ipData?.country?.iso_code) point = point.tag("country", ipData.country.iso_code)
       if (ipData?.subdivisions?.[0]?.iso_code) point = point.tag("state", ipData.subdivisions[0].iso_code)
+      if (userData.referrer) point = point.tag("referrer", userData.referrer)
 
       writeApi.writePoint(point)
 
@@ -137,7 +137,6 @@ async function main() {
         .tag("visitorUuid", userData.visitorUuid)
         .tag("userUuid", userData.user_id)
         .tag("path", userData.path)
-        .tag("referrer", userData.referrer)
         .tag("type", event.type)
         .stringField("data", JSON.stringify(event.data))
  
@@ -153,6 +152,7 @@ async function main() {
       if (userData.utm_content) point = point.tag("utm_content", userData.utm_content)
       if (ipData?.country?.iso_code) point = point.tag("country", ipData.country.iso_code)
       if (ipData?.subdivisions?.[0]?.iso_code) point = point.tag("state", ipData.subdivisions[0].iso_code)
+      if (userData.referrer) point = point.tag("referrer", userData.referrer)
 
       writeApi.writePoint(point)
 
@@ -169,7 +169,6 @@ async function main() {
         .tag("visitorUuid", userData.visitorUuid)
         .tag("userUuid", userData.user_id)
         .tag("path", userData.path)
-        .tag("referrer", userData.referrer)
         .tag("type", "close")
 
       if (userData.browser) point = point.tag("browser", userData.browser)
@@ -184,6 +183,7 @@ async function main() {
       if (userData.utm_content) point = point.tag("utm_content", userData.utm_content)
       if (ipData?.country?.iso_code) point = point.tag("country", ipData.country.iso_code)
       if (ipData?.subdivisions?.[0]?.iso_code) point = point.tag("state", ipData.subdivisions[0].iso_code)
+      if (userData.referrer) point = point.tag("referrer", userData.referrer)
 
       writeApi.writePoint(point)
 
