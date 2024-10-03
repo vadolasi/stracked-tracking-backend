@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import { UAParser } from "ua-parser-js";
 import { parse } from "cookie";
 import maxmind, { CityResponse } from "maxmind";
+import { join } from "path";
 
 dotenv.config()
 
@@ -38,7 +39,7 @@ type UserData = Payload & {
 }
 
 async function main() {
-  const lookup = await maxmind.open<CityResponse>(__dirname + "/GeoLite2-City.mmdb")
+  const lookup = await maxmind.open<CityResponse>(join(process.cwd(), "src/GeoLite2-City.mmdb"))
 
   app.ws("/*", {
     upgrade: (res, req, context) => {

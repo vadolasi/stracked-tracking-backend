@@ -8,7 +8,7 @@
     "dev:worker1": "nodemon src/worker1.ts",
     "dev:worker2": "nodemon src/worker2.ts",
     "build": "sucrase src -d dist --transforms typescript,imports",
-    "start": "pm2 start dist/index.js -i max"
+    "start": "pm2-runtime start dist/index.js -i max"
   },
   "keywords": [],
   "author": "",
