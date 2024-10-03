@@ -39,7 +39,7 @@ type UserData = Payload & {
 }
 
 async function main() {
-  const lookup = await maxmind.open<CityResponse>(join(process.cwd(), "src/GeoLite2-City.mmdb"))
+  const lookup = await maxmind.open<CityResponse>(join(__dirname, "GeoLite2-City.mmdb"))
 
   app.ws("/*", {
     upgrade: (res, req, context) => {
