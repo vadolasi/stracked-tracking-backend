@@ -1,4 +1,8 @@
 FROM node:20-slim AS base
+ARG MAXMIND_ACCOUNT_ID
+ARG MAXMIND_LICENSE_KEY
+ENV MAXMIND_ACCOUNT_ID=$MAXMIND_ACCOUNT_ID
+ENV MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
@@ -15,5 +19,4 @@ RUN pnpm run build
 FROM base
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
-COPY --from=build /app/src/GeoLite2-City.mmdb /app/dist/GeoLite2-City.mmdb
 CMD [ "pnpm", "start" ]

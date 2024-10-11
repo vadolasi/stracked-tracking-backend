@@ -1,4 +1,27 @@
 services:
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: stracked
+    ports:
+      - "27017:27017"
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: mongo
+    links:
+      - mongo
+
   influxdb2:
     image: influxdb:2-alpine
     ports:
@@ -12,7 +35,11 @@ services:
       DOCKER_INFLUXDB_INIT_BUCKET: stracked
 
   app:
-    build: .
+    build:
+      context: .
+      args:
+        MAXMIND_ACCOUNT_ID: ${MAXMIND_ACCOUNT_ID}
+        MAXMIND_LICENSE_KEY: ${MAXMIND_LICENSE_KEY}
     ports:
       - 8000:8000
     links:
