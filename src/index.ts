@@ -36,7 +36,7 @@ async function main() {
       maxPayloadLength: 16 * 1024 * 1024,
       idleTimeout: 30,
       upgrade: (res, req, context) => {
-        const ip = new TextDecoder().decode(res.getRemoteAddressAsText())
+        const ip = new TextDecoder().decode(res.getRemoteAddressAsText()) ?? req.getHeader("x-forwarded-for")
         const ipData = lookup.get(ip)
         const params = new URLSearchParams(req.getQuery())
 
@@ -75,18 +75,25 @@ async function main() {
           .tag("path", path)
           .tag("type", "open")
           .stringField("data", JSON.stringify({}))
-   
+
         if (result.browser.name) point = point.tag("browser", result.browser.name)
         if (result.device.type) point = point.tag("device", result.device.type)
         if (result.os.name) point = point.tag("os", result.os.name)
-        if (utm_source) point = point.tag("utm_source", utm_source)
-        if (utm_medium) point = point.tag("utm_medium", utm_medium)
+        if (utm_source) {
+          point = point.tag("souce", utm_source)
+        } else if (referrer) {
+          point = point.tag("source", new URL(referrer).hostname)
+        }
+        if (utm_medium) {
+          point = point.tag("medium", utm_medium)
+        } else if (referrer) {
+          point = point.tag("medium", "referral")
+        }
         if (utm_campaign) point = point.tag("utm_campaign", utm_campaign)
         if (utm_term) point = point.tag("utm_term", utm_term)
         if (utm_content) point = point.tag("utm_content", utm_content)
         if (ipData?.country?.iso_code) point = point.tag("country", ipData.country.iso_code)
         if (ipData?.subdivisions?.[0]?.iso_code) point = point.tag("state", ipData.subdivisions[0].iso_code)
-        if (referrer) point = point.tag("referrer", referrer)
 
         writeApi.writePoint(point)
 
