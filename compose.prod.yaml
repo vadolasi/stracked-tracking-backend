@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        MAXMIND_ACCOUNT_ID: ${MAXMIND_ACCOUNT_ID}
+        MAXMIND_LICENSE_KEY: ${MAXMIND_LICENSE_KEY}
+    ports:
+      - 8000:8000
+    links:
+      - influxdb2

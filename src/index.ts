@@ -36,7 +36,7 @@ async function main() {
       maxPayloadLength: 16 * 1024 * 1024,
       idleTimeout: 30,
       upgrade: (res, req, context) => {
-        const ip = new TextDecoder().decode(res.getRemoteAddressAsText()) ?? req.getHeader("X-Forwarded-For")
+        const ip = new TextDecoder().decode(res.getRemoteAddressAsText()) ?? req.getHeader("CF-Connecting-IP")
         const ipData = lookup.get(ip)
         const params = new URLSearchParams(req.getQuery())
 

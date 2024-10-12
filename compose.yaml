@@ -10,14 +10,3 @@ services:
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN}
       DOCKER_INFLUXDB_INIT_ORG: stracked
       DOCKER_INFLUXDB_INIT_BUCKET: stracked
-
-  app:
-    build:
-      context: .
-      args:
-        MAXMIND_ACCOUNT_ID: ${MAXMIND_ACCOUNT_ID}
-        MAXMIND_LICENSE_KEY: ${MAXMIND_LICENSE_KEY}
-    ports:
-      - 8000:8000
-    links:
-      - influxdb2
