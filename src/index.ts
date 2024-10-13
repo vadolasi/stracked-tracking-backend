@@ -80,7 +80,7 @@ async function main() {
         if (result.device.type) point = point.tag("device", result.device.type)
         if (result.os.name) point = point.tag("os", result.os.name)
         if (utm_source) {
-          point = point.tag("souce", utm_source)
+          point = point.tag("source", utm_source)
         } else if (referrer) {
           point = point.tag("source", new URL(referrer).hostname)
         }
@@ -113,6 +113,7 @@ async function main() {
 
         let point = new Point("stracked")
           .tag("visitorUuid", userData.visitorUuid)
+          .tag("websiteUuid", userData.websiteUuid)
           .tag("userUuid", userData.user_id)
           .tag("type", event.type)
           .stringField("data", JSON.stringify(event.data))
@@ -126,6 +127,7 @@ async function main() {
 
         let point = new Point("stracked")
           .tag("visitorUuid", userData.visitorUuid)
+          .tag("websiteUuid", userData.websiteUuid)
           .tag("userUuid", userData.user_id)
           .tag("type", "close")
           .stringField("data", JSON.stringify({}))
