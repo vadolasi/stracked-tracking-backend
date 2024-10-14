@@ -21,10 +21,7 @@ const writeApi = influx.getWriteApi("stracked", "stracked", "ms")
 type Payload = {
   websiteUuid: string
   visitorUuid: string
-}
-
-type UserData = Payload & {
-  user_id: string
+  userUuid: string
 }
 
 async function main() {
@@ -36,7 +33,10 @@ async function main() {
       maxPayloadLength: 16 * 1024 * 1024,
       idleTimeout: 30,
       upgrade: (res, req, context) => {
-        const ip = new TextDecoder().decode(res.getRemoteAddressAsText()) ?? req.getHeader("CF-Connecting-IP")
+        req.forEach((key, value) => {
+          console.log(key, value)
+        })
+        const ip = new TextDecoder().decode(res.getRemoteAddressAsText()) ?? req.getHeader("CF-Connecting-IP") ?? req.getHeader("X-Real-IP") ?? req.getHeader("X-Forwarded-For")
         const ipData = lookup.get(ip)
         const params = new URLSearchParams(req.getQuery())
 
@@ -61,17 +61,12 @@ async function main() {
 
         const result = new UAParser(req.getHeader("user-agent")).getResult()
 
-        const cookies = parse(req.getHeader("cookie")!)
-
-        const userData: UserData = {
-          ...payload,
-          user_id: cookies["stracked-user-id"]
-        }
+        const userData: Payload = payload as Payload
 
         let point = new Point("stracked")
           .tag("websiteUuid", userData.websiteUuid)
           .tag("visitorUuid", userData.visitorUuid)
-          .tag("userUuid", userData.user_id)
+          .tag("userUuid", userData.userUuid)
           .tag("path", path)
           .tag("type", "open")
           .stringField("complete", JSON.stringify({ referrer }))
@@ -108,13 +103,13 @@ async function main() {
         );
       },
       message: (ws, message) => {
-        const userData = ws.getUserData() as UserData
+        const userData = ws.getUserData() as Payload
         const event = decoder.decode(Buffer.from(message))
 
         let point = new Point("stracked")
           .tag("visitorUuid", userData.visitorUuid)
           .tag("websiteUuid", userData.websiteUuid)
-          .tag("userUuid", userData.user_id)
+          .tag("userUuid", userData.userUuid)
           .tag("type", event.type)
           .stringField("data", JSON.stringify(event.data))
    
@@ -123,12 +118,12 @@ async function main() {
         writeApi.flush()
       },
       close: (ws) => {
-        const userData = ws.getUserData() as UserData
+        const userData = ws.getUserData() as Payload
 
         let point = new Point("stracked")
           .tag("visitorUuid", userData.visitorUuid)
           .tag("websiteUuid", userData.websiteUuid)
-          .tag("userUuid", userData.user_id)
+          .tag("userUuid", userData.userUuid)
           .tag("type", "close")
           .stringField("data", JSON.stringify({}))
 
