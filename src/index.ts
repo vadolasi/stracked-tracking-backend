@@ -36,7 +36,7 @@ async function main() {
         req.forEach((key, value) => {
           console.log(key, value)
         })
-        const ip = new TextDecoder().decode(res.getRemoteAddressAsText()) ?? req.getHeader("CF-Connecting-IP") ?? req.getHeader("X-Real-IP") ?? req.getHeader("X-Forwarded-For")
+        const ip = req.getHeader("x-forwarded-for") ?? new TextDecoder().decode(res.getRemoteAddressAsText())
         const ipData = lookup.get(ip)
         const params = new URLSearchParams(req.getQuery())
 
