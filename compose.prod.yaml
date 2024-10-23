@@ -5,6 +5,7 @@ services:
       args:
         MAXMIND_ACCOUNT_ID: ${MAXMIND_ACCOUNT_ID}
         MAXMIND_LICENSE_KEY: ${MAXMIND_LICENSE_KEY}
+    restart: always
     ports:
       - 8000:8000
     links:
