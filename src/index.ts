@@ -3,7 +3,6 @@ import { InfluxDB, Point } from "@influxdata/influxdb-client"
 import { createVerifier } from "fast-jwt"
 import dotenv from "dotenv"
 import { UAParser } from "ua-parser-js";
-import { parse } from "cookie";
 import maxmind, { CityResponse } from "maxmind";
 import geolite2 from "geolite2"
 import { Decoder } from "msgpackr";
@@ -20,8 +19,13 @@ const writeApi = influx.getWriteApi("stracked", "stracked", "ms")
 
 type Payload = {
   websiteUuid: string
-  visitorUuid: string
   userUuid: string
+  visitorUuid: string
+  viewUuid: string
+}
+
+type UserData = Payload & {
+  path: string
 }
 
 async function main() {
@@ -61,7 +65,7 @@ async function main() {
 
         const result = new UAParser(req.getHeader("user-agent")).getResult()
 
-        const userData: Payload = payload as Payload
+        const userData: UserData = { ...(payload as Payload), path }
 
         let point = new Point("stracked")
           .tag("websiteUuid", userData.websiteUuid)
@@ -103,7 +107,7 @@ async function main() {
         );
       },
       message: (ws, message) => {
-        const userData = ws.getUserData() as Payload
+        const userData = ws.getUserData() as UserData
         const event = decoder.decode(Buffer.from(message))
 
         let point = new Point("stracked")
@@ -118,12 +122,13 @@ async function main() {
         writeApi.flush()
       },
       close: (ws) => {
-        const userData = ws.getUserData() as Payload
+        const userData = ws.getUserData() as UserData
 
         let point = new Point("stracked")
           .tag("visitorUuid", userData.visitorUuid)
           .tag("websiteUuid", userData.websiteUuid)
           .tag("userUuid", userData.userUuid)
+          .tag("path", userData.path)
           .tag("type", "close")
           .stringField("data", JSON.stringify({}))
 
